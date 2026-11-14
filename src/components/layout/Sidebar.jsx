@@ -33,7 +33,12 @@ export function AdminAvatar({ sizeClass = 'w-8 h-8' }) {
 /**
  * Left navigation sidebar matching the UniMart Admin layout.
  */
-export default function Sidebar({ isOpen, onClose, onLogout }) {
+export default function Sidebar({
+  isOpen,
+  onClose,
+  onLogout,
+  adminName = 'Super Admin',
+}) {
   return (
     <>
       {isOpen && (
@@ -114,7 +119,7 @@ export default function Sidebar({ isOpen, onClose, onLogout }) {
           <div className="flex items-center gap-2.5 min-w-0">
             <AdminAvatar sizeClass="w-8 h-8" />
             <span className="text-[13.5px] font-medium text-slate-800 truncate">
-              Super Admin
+              {adminName}
             </span>
           </div>
 
