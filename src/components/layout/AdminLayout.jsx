@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ADMIN_NAV_ITEMS } from '../../config/navigation';
+import { useAuth } from '../../context/useAuth';
 import Sidebar from './Sidebar';
 import TopHeader from './TopHeader';
 
@@ -11,6 +12,8 @@ export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
+  const navigate = useNavigate();
+  const { admin, logout } = useAuth();
 
   const currentNav =
     ADMIN_NAV_ITEMS.find((item) =>
@@ -19,8 +22,11 @@ export default function AdminLayout() {
         : location.pathname.startsWith(item.path)
     ) || ADMIN_NAV_ITEMS[0];
 
+  const adminName = admin?.userProfile?.fullName || 'Super Admin';
+
   const handleLogout = () => {
-    window.alert('Signed out of UniMart Admin session.');
+    logout();
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -29,6 +35,7 @@ export default function AdminLayout() {
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         onLogout={handleLogout}
+        adminName={adminName}
       />
 
       <div className="flex-1 min-w-0 flex flex-col">
