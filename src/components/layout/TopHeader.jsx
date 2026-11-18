@@ -10,6 +10,7 @@ export default function TopHeader({
   onSearchChange,
   onOpenSidebar,
   notificationCount = 5,
+  showSearch = true,
 }) {
   return (
     <header className="h-16 bg-white border-b border-slate-200/90 px-4 sm:px-6 flex items-center justify-between gap-4 shrink-0">
@@ -30,25 +31,27 @@ export default function TopHeader({
 
       <div className="flex items-center gap-3 sm:gap-4">
         {/* Search Input with Filter Icon */}
-        <div className="relative hidden sm:flex items-center w-64 md:w-72">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search..."
-            aria-label="Search dashboard"
-            className="w-full h-9 pl-9 pr-9 rounded-lg border border-slate-200 bg-white text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition"
-          />
-          <button
-            type="button"
-            aria-label="Filter results"
-            title="Filters"
-            className="absolute right-2.5 p-1 text-slate-500 hover:text-slate-800 cursor-pointer"
-          >
-            <SlidersHorizontal className="w-4 h-4" />
-          </button>
-        </div>
+        {showSearch && (
+          <div className="relative hidden sm:flex items-center w-64 md:w-72">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => onSearchChange(e.target.value)}
+              placeholder="Search..."
+              aria-label="Search dashboard"
+              className="w-full h-9 pl-9 pr-9 rounded-lg border border-slate-200 bg-white text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15 transition"
+            />
+            <button
+              type="button"
+              aria-label="Filter results"
+              title="Filters"
+              className="absolute right-2.5 p-1 text-slate-500 hover:text-slate-800 cursor-pointer"
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
         {/* Notifications Bell */}
         <button
