@@ -38,6 +38,7 @@ export default function Sidebar({
   onClose,
   onLogout,
   adminName = 'Super Admin',
+  badgeCounts = {},
 }) {
   return (
     <>
@@ -77,41 +78,48 @@ export default function Sidebar({
 
         {/* Navigation Links */}
         <nav className="flex-1 px-3 py-3 space-y-1 overflow-y-auto">
-          {ADMIN_NAV_ITEMS.map(({ path, label, icon: Icon, badge }) => (
-            <NavLink
-              key={path}
-              to={path}
-              end={path === '/'}
-              onClick={onClose}
-              className={({ isActive }) =>
-                `flex items-center justify-between px-3 py-2.5 rounded-lg text-[13.5px] font-medium transition-colors ${
-                  isActive
-                    ? 'bg-[#EFF6FF] text-[#2563EB]'
-                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-                }`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  <span className="flex items-center gap-3 min-w-0">
-                    <Icon
-                      className={`w-[17px] h-[17px] shrink-0 ${
-                        isActive ? 'text-[#2563EB]' : 'text-slate-500'
-                      }`}
-                      strokeWidth={2}
-                    />
-                    <span className="truncate">{label}</span>
-                  </span>
+          {ADMIN_NAV_ITEMS.map(({ path, label, icon: Icon, badge, badgeKey }) => {
+            const displayBadge =
+              badgeKey && typeof badgeCounts[badgeKey] === 'number'
+                ? badgeCounts[badgeKey]
+                : badge;
 
-                  {typeof badge === 'number' && badge > 0 && (
-                    <span className="ml-2 inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-[#EF4444] text-white text-[11px] font-semibold leading-none">
-                      {badge}
+            return (
+              <NavLink
+                key={path}
+                to={path}
+                end={path === '/'}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `flex items-center justify-between px-3 py-2.5 rounded-lg text-[13.5px] font-medium transition-colors ${
+                    isActive
+                      ? 'bg-[#EFF6FF] text-[#2563EB]'
+                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <span className="flex items-center gap-3 min-w-0">
+                      <Icon
+                        className={`w-[17px] h-[17px] shrink-0 ${
+                          isActive ? 'text-[#2563EB]' : 'text-slate-500'
+                        }`}
+                        strokeWidth={2}
+                      />
+                      <span className="truncate">{label}</span>
                     </span>
-                  )}
-                </>
-              )}
-            </NavLink>
-          ))}
+
+                    {typeof displayBadge === 'number' && displayBadge > 0 && (
+                      <span className="ml-2 inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-[#EF4444] text-white text-[11px] font-semibold leading-none">
+                        {displayBadge}
+                      </span>
+                    )}
+                  </>
+                )}
+              </NavLink>
+            );
+          })}
         </nav>
 
         {/* Bottom Super Admin Profile */}
