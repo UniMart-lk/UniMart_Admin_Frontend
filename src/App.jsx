@@ -6,6 +6,8 @@ import { useAuth } from './context/useAuth';
 import DashboardPage from './pages/DashboardPage';
 import LoginPage from './pages/LoginPage';
 import PlaceholderPage from './pages/PlaceholderPage';
+import ProvidersPage from './pages/ProvidersPage';
+import UsersPage from './pages/UsersPage';
 
 function AuthLoadingScreen() {
   return (
@@ -56,11 +58,8 @@ function App() {
           >
             <Route index element={<DashboardPage />} />
             <Route path="dashboard" element={<Navigate to="/" replace />} />
-            <Route path="users" element={<PlaceholderPage title="Users" />} />
-            <Route
-              path="providers"
-              element={<PlaceholderPage title="Providers" />}
-            />
+            <Route path="users" element={<UsersPage />} />
+            <Route path="providers" element={<ProvidersPage />} />
             <Route
               path="verifications"
               element={<PlaceholderPage title="Verifications" />}
