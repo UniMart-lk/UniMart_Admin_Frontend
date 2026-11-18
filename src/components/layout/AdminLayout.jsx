@@ -40,10 +40,11 @@ export default function AdminLayout() {
 
       <div className="flex-1 min-w-0 flex flex-col">
         <TopHeader
-          title={currentNav.label}
+          title={currentNav.headerTitle || currentNav.label}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           onOpenSidebar={() => setSidebarOpen(true)}
+          showSearch={!currentNav.hideHeaderSearch}
         />
 
         <main className="flex-1 p-4 sm:p-6">
