@@ -8,6 +8,8 @@ import LoginPage from './pages/LoginPage';
 import PlaceholderPage from './pages/PlaceholderPage';
 import ProvidersPage from './pages/ProvidersPage';
 import UsersPage from './pages/UsersPage';
+import VerificationDetailsPage from './pages/VerificationDetailsPage';
+import VerificationsPage from './pages/VerificationsPage';
 
 function AuthLoadingScreen() {
   return (
@@ -60,9 +62,10 @@ function App() {
             <Route path="dashboard" element={<Navigate to="/" replace />} />
             <Route path="users" element={<UsersPage />} />
             <Route path="providers" element={<ProvidersPage />} />
+            <Route path="verifications" element={<VerificationsPage />} />
             <Route
-              path="verifications"
-              element={<PlaceholderPage title="Verifications" />}
+              path="verifications/:id"
+              element={<VerificationDetailsPage />}
             />
             <Route
               path="marketplace-listings"
