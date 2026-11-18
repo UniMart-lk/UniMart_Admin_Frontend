@@ -11,6 +11,22 @@ export function formatJoinedDate(dateString) {
 }
 
 /**
+ * Format an ISO timestamp into a compact relative time string like "2h ago" or "3d ago".
+ */
+export function formatRelativeTime(dateString) {
+  if (!dateString) return '—';
+  const diffMs = Math.max(0, Date.now() - new Date(dateString).getTime());
+  const mins = Math.floor(diffMs / 60000);
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days}d ago`;
+  return formatJoinedDate(dateString);
+}
+
+/**
  * Download tabular records as an RFC-4180 escaped CSV file.
  */
 export function downloadCsv(headers, rows, filename) {
