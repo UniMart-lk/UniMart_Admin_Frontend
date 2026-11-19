@@ -32,7 +32,6 @@ const FILTER_TABS = [
   { key: 'all', label: 'All' },
   { key: 'studentProviders', label: 'Student' },
   { key: 'externalProviders', label: 'External' },
-  { key: 'pending', label: 'Pending' },
   { key: 'suspended', label: 'Suspended' },
 ];
 
@@ -122,14 +121,13 @@ export default function ProvidersPage() {
       limit: PAGE_LIMIT,
       search: debouncedSearch,
       sort: sortOrder,
+      verificationStatus: 'VERIFIED',
     };
 
     if (activeTab === 'studentProviders') {
       params.providerType = 'STUDENT_PROVIDER';
     } else if (activeTab === 'externalProviders') {
       params.providerType = 'EXTERNAL_PROVIDER';
-    } else if (activeTab === 'pending') {
-      params.verificationStatus = 'PENDING';
     } else if (activeTab === 'suspended') {
       params.accountStatus = 'SUSPENDED';
     }
