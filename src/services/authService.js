@@ -4,6 +4,9 @@ import api from './api';
  * Extract a user-friendly error message from an Axios error.
  */
 export function extractApiError(error, fallbackMessage) {
+  if (error?.code === 'ECONNABORTED') {
+    return 'Request timed out waiting for the server. Please verify UniMart Backend is running and try again.';
+  }
   return (
     error?.response?.data?.message ||
     error?.message ||
