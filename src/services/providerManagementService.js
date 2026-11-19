@@ -9,6 +9,7 @@ export async function fetchAdminProviders({
   search = '',
   providerType = '',
   verificationStatus = '',
+  excludeVerificationStatus = '',
   accountStatus = '',
   sort = 'recent',
 } = {}) {
@@ -17,6 +18,9 @@ export async function fetchAdminProviders({
   if (search.trim()) params.search = search.trim();
   if (providerType) params.providerType = providerType;
   if (verificationStatus) params.verificationStatus = verificationStatus;
+  if (excludeVerificationStatus) {
+    params.excludeVerificationStatus = excludeVerificationStatus;
+  }
   if (accountStatus) params.accountStatus = accountStatus;
 
   const response = await api.get('/admin/providers', { params });
