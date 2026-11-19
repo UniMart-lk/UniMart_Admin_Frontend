@@ -15,7 +15,7 @@ export async function fetchAdminUsers({
     page,
     limit,
     sort,
-    excludeRole: 'ADMIN',
+    role: 'USER',
   };
 
   if (search.trim()) params.search = search.trim();
