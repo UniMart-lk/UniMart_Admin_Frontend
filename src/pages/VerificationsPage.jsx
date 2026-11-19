@@ -8,7 +8,7 @@ import {
   SlidersHorizontal,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Pagination from '../components/common/Pagination';
 import RejectReasonModal from '../components/verifications/RejectReasonModal';
 import { extractApiError } from '../services/authService';
@@ -23,7 +23,6 @@ const PAGE_LIMIT = 5;
 const FILTER_TABS = [
   { key: 'all', label: 'All' },
   { key: 'pending', label: 'Pending' },
-  { key: 'verified', label: 'Approved' },
   { key: 'rejected', label: 'Rejected' },
 ];
 
@@ -67,6 +66,7 @@ function getDocumentCount(provider) {
  */
 export default function VerificationsPage() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [searchInput, setSearchInput] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -81,7 +81,6 @@ export default function VerificationsPage() {
   const [counts, setCounts] = useState({
     all: 0,
     pending: 0,
-    verified: 0,
     rejected: 0,
   });
 
@@ -90,7 +89,7 @@ export default function VerificationsPage() {
   const [busyProviderId, setBusyProviderId] = useState(null);
   const [rejectTarget, setRejectTarget] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
-  const [feedback, setFeedback] = useState('');
+  const [feedback, setFeedback] = useState(() => location.state?.feedback || '');
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -106,10 +105,10 @@ export default function VerificationsPage() {
       limit: PAGE_LIMIT,
       search: debouncedSearch,
       sort: sortOrder,
+      excludeVerificationStatus: 'VERIFIED',
     };
 
     if (activeTab === 'pending') params.verificationStatus = 'PENDING';
-    if (activeTab === 'verified') params.verificationStatus = 'VERIFIED';
     if (activeTab === 'rejected') params.verificationStatus = 'REJECTED';
     if (typeFilter) params.providerType = typeFilter;
 
