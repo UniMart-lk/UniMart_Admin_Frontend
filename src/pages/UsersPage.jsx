@@ -43,13 +43,10 @@ function getDisplayName(user) {
 }
 
 function getUserTypeKind(user) {
-  if (
-    user?.userProfile?.userType === 'STUDENT' ||
-    user?.providerProfile?.providerType === 'STUDENT_PROVIDER'
-  ) {
-    return 'STUDENT';
+  if (user?.userProfile?.userType === 'EXTERNAL') {
+    return 'EXTERNAL';
   }
-  return 'EXTERNAL';
+  return 'STUDENT';
 }
 
 function downloadUsersCsv(users, filename) {
