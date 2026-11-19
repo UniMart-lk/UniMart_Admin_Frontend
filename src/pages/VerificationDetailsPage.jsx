@@ -117,12 +117,24 @@ export default function VerificationDetailsPage() {
 
       window.dispatchEvent(new CustomEvent('unimart-verifications-updated'));
 
+      if (targetStatus === 'VERIFIED') {
+        const providerLabel =
+          updated?.displayName ||
+          updated?.user?.userProfile?.fullName ||
+          'Provider';
+        navigate('/verifications', {
+          replace: true,
+          state: {
+            feedback: `${providerLabel} approved! Moved to Provider Management and verification badges activated.`,
+          },
+        });
+        return;
+      }
+
       setFeedback(
-        targetStatus === 'VERIFIED'
-          ? 'Provider approved! Student/External + Verified badges are now active on their profile.'
-          : targetStatus === 'REJECTED'
-            ? 'Provider verification rejected and notification sent.'
-            : 'Additional information requested from the provider.'
+        targetStatus === 'REJECTED'
+          ? 'Provider verification rejected and notification sent.'
+          : 'Additional information requested from the provider.'
       );
     } catch (err) {
       setErrorMessage(
